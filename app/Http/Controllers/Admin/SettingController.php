@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    // Tambahkan ini agar aman dipanggil dari menu index/sidebar
+    public function index()
+    {
+        return $this->edit();
+    }
+
     public function edit()
     {
         // Ambil data setting pertama, jika belum ada buat baris kosong

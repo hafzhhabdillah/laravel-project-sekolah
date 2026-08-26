@@ -14,6 +14,21 @@
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
+        <!-- Role Select Options -->
+        <div class="group">
+            <label for="role" class="block font-semibold text-slate-700 text-xs mb-1.5 transition-colors group-focus-within:text-blue-600">Masuk Sebagai</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                    <i class="bi bi-person-badge-fill"></i>
+                </div>
+                <select id="role" name="role" required class="w-full rounded-2xl border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100 text-sm py-2.5 pl-10 pr-3.5 bg-slate-50/50 focus:bg-white transition-all duration-300 text-slate-700">
+                    <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
+                </select>
+            </div>
+            <x-input-error :messages="$errors->get('role')" class="mt-1.5 text-xs" />
+        </div>
+
         <!-- Email Address -->
         <div class="group">
             <label for="email" class="block font-semibold text-slate-700 text-xs mb-1.5 transition-colors group-focus-within:text-blue-600">Email Sekolah</label>
@@ -65,13 +80,6 @@
                 <span>Masuk Sekarang</span>
                 <i class="bi bi-arrow-right text-base"></i>
             </button>
-        </div>
-
-        <!-- Register Link -->
-        <div class="text-center pt-3">
-            <p class="text-xs text-slate-500">Belum punya akun?
-                <a href="{{ route('register') }}" class="text-blue-600 font-bold hover:underline transition-all">Daftar Akun Baru</a>
-            </p>
         </div>
     </form>
 </x-guest-layout>

@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-slate-800 leading-tight">
@@ -66,4 +68,4 @@
             </form>
         </div>
     </div>
-</x-app-layout>
+@endsection

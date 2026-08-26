@@ -29,6 +29,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        // Mengisi data yang sudah divalidasi (nama, email, dll)
         $user->fill($request->validated());
 
         if ($user->isDirty('email')) {
@@ -37,13 +38,14 @@ class ProfileController extends Controller
 
         // Handle upload avatar baru
         if ($request->hasFile('avatar')) {
-            // Hapus avatar lama kalau ada di storage
+            // Hapus avatar lama dari storage jika ada
             if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
                 Storage::disk('public')->delete($user->avatar);
             }
 
-            // Simpan avatar baru
-            $user->avatar = $request->file('avatar')->store('avatars', 'public');
+            // Simpan avatar baru ke folder storage/app/public/avatars
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
         }
 
         $user->save();
@@ -64,7 +66,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        // Hapus avatar dari storage pas user hapus akun
+        // Hapus avatar dari storage saat user menghapus akun
         if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
             Storage::disk('public')->delete($user->avatar);
         }

@@ -14,11 +14,13 @@ class DashboardController extends Controller
         $latestGalleries = Gallery::latest()->take(3)->get();
 
         $totalUser  = User::count();
-        $totalGuru  = User::whereRaw('LOWER(role) = ?', ['guru'])->count();
+
+        // 👇 Ubah query ini agar menghitung 'admin', tapi variabelnya tetap $totalGuru
+        $totalGuru  = User::whereRaw('LOWER(role) = ?', ['admin'])->count();
+
         $totalSiswa = User::whereRaw('LOWER(role) = ?', ['siswa'])->count();
         $totalAdmin = User::whereRaw('LOWER(role) = ?', ['admin'])->count();
 
-        // Mengarahkan ke view 'dashboard' utama
         return view('dashboard', compact(
             'totalGaleri',
             'latestGalleries',
